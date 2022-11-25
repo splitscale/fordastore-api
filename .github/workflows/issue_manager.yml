@@ -1,0 +1,23 @@
+name: auto add issues to project
+
+on:
+  workflow_dispatch:
+  issues:
+    types:
+      - opened
+    
+jobs:
+  call-feature-issue-to-project:
+    uses: splitscale/.github/.github/workflows/feature-issue-to-project.yml@main
+    if: ${{ contains(github.event.issue.labels.*.name, 'feature') }}
+    secrets: inherit
+
+  call-feature-details-issue-to-project:
+    uses: splitscale/.github/.github/workflows/feature-details-issue-to-project.yml@main
+    if: ${{ startsWith(github.event.issue.title, 'SD-') }}
+    secrets: inherit
+  
+  call-bug-issue-to-project:
+    uses: splitscale/.github/.github/workflows/bug-issue-to-project.yml@main
+    if: ${{ contains(github.event.issue.labels.*.name, 'bug') }}
+    secrets: inherit
