@@ -1,13 +1,18 @@
 package com.splitscale.api.fordastore;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
 class FordastoreApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+  @Test
+  @DisplayName("first test")
+  void myFirstTest() {
+    boolean item1 = true;
+    boolean item2 = true;
 
+    assertEquals(item1, item2);
+  }
 }
