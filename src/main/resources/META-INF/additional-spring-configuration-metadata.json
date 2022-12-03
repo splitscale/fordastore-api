@@ -1,0 +1,13 @@
+{"properties": [{
+  "name": "mysql.password",
+  "type": "java.lang.String",
+  "description": "A description for 'mysql.password'"
+}]}{"properties": [{
+  "name": "mysql.username",
+  "type": "java.lang.String",
+  "description": "A description for 'mysql.username'"
+}]}{"properties": [{
+  "name": "mysql.url",
+  "type": "java.lang.String",
+  "description": "A description for 'mysql.url'"
+}]}

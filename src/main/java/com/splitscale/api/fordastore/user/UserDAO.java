@@ -4,7 +4,7 @@ public interface UserDAO {
   // finds the user using username
   void createUser(String username, String password);
 
-  void readUser(String username);
+  UserInfo readUser(String username);
 
   void updateUser(String username, String password);
 

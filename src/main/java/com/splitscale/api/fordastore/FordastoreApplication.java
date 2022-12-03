@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FordastoreApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FordastoreApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(FordastoreApplication.class, args);
+  }
 
 }
