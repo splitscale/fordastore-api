@@ -4,20 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MysqlDB implements SqlConnectable {
 
+  @Autowired
+  DBPropsLoader service;
+
   @Override
   public Connection getConnection() throws SQLException {
 
-    // load the properties file
-
     // assign db parameters
-    String url = "jdbc:mysql://localhost:3307/fordaStore?allowPublicKeyRetrieval=true&useSSL=false";
-    String user = "root";
-    String password = "splitscale";
+    String url = service.getUrl();
+    String user = service.getUsername();
+    String password = service.getPassword();
 
     // create a connection to the database
     return DriverManager.getConnection(url, user, password);

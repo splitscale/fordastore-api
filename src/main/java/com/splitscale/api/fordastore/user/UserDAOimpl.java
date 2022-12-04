@@ -21,7 +21,20 @@ public class UserDAOimpl implements UserDAO {
 
   @Override
   public void createUser(String username, String password) {
-    //
+    String update = "INSERT INTO User (username, userPassword) VALUES ('" + username + "', '" + password + "');";
+
+    Connection connection;
+    try {
+      connection = db.getConnection();
+      Statement statement = connection.createStatement();
+      int result = statement.executeUpdate(update);
+
+      System.out.println(result);
+
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
