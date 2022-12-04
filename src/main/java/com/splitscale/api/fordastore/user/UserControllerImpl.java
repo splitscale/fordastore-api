@@ -20,14 +20,26 @@ public class UserControllerImpl implements UserController {
 
   @Override
   @ResponseBody
-  @GetMapping(value = "/user")
+  @GetMapping(value = "/user/get")
   public UserInfo getUser(@RequestParam("username") String JSONgetPayload) {
     return dao.readUser(JSONgetPayload);
   }
 
   @Override
   @GetMapping(value = "/user/add")
-  public void addUser(@RequestBody String JSONpostPayload) {
-    dao.createUser(JSONpostPayload, JSONpostPayload);
+  public void addUser(String JSONpostPayload) {
+    dao.createUser("username1", "password1");
+  }
+
+  @Override
+  @GetMapping(value = "/user/delete")
+  public void deleteUser(String JSONpostPayload) {
+    dao.deleteUser("username2", "password2");
+  }
+
+  @Override
+  @GetMapping(value = "/user/update")
+  public void updateUser(String JSONpostPayload) {
+    dao.updateUser("username3", "password3");
   }
 }

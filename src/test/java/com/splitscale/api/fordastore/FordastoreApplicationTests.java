@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 class FordastoreApplicationTests {
 
   @Test
-  @DisplayName("first test")
-  void myFirstTest() {
+  @DisplayName("fordastore package")
+  void someTest() {
     boolean item1 = true;
     boolean item2 = true;
 
