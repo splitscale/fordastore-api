@@ -4,10 +4,10 @@ public interface UserController {
 
   public UserInfo getUser(String JSONgetPayload);
 
-  public void addUser(String JSONpostPayload);
+  public void addUser(UserInfoImpl userInfo);
 
-  public void deleteUser(String JSONpostPayload);
+  public void deleteUser(UserInfoImpl userInfo);
 
-  public void updateUser(String JSONpostPayload);
+  public void updateUser(UserInfoImpl userInfo);
 
 }
