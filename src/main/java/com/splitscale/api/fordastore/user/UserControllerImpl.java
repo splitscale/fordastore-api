@@ -1,7 +1,10 @@
 package com.splitscale.api.fordastore.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserControllerImpl implements UserController {
   private UserDAO dao;
 
@@ -20,26 +23,26 @@ public class UserControllerImpl implements UserController {
 
   @Override
   @ResponseBody
-  @GetMapping(value = "/user/get")
+  @GetMapping(value = "/get")
   public UserInfo getUser(@RequestParam("username") String JSONgetPayload) {
     return dao.readUser(JSONgetPayload);
   }
 
   @Override
-  @GetMapping(value = "/user/add")
-  public void addUser(String JSONpostPayload) {
-    dao.createUser("username1", "password1");
+  @PostMapping(value = "/add")
+  public void addUser(@RequestBody UserInfoImpl userInfo) {
+    dao.createUser(userInfo.getUsername(), userInfo.getPassword());
   }
 
   @Override
-  @GetMapping(value = "/user/delete")
-  public void deleteUser(String JSONpostPayload) {
-    dao.deleteUser("username2", "password2");
+  @DeleteMapping(value = "/delete")
+  public void deleteUser(UserInfoImpl userInfo) {
+    dao.deleteUser(userInfo.getUsername(), userInfo.getPassword());
   }
 
   @Override
-  @GetMapping(value = "/user/update")
-  public void updateUser(String JSONpostPayload) {
-    dao.updateUser("username3", "password3");
+  @PutMapping(value = "/update")
+  public void updateUser(UserInfoImpl userInfo) {
+    dao.updateUser(userInfo.getUsername(), userInfo.getPassword());
   }
 }
