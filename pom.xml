@@ -9,20 +9,22 @@
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
-  <groupId>com.splitscale.api</groupId>
-  <artifactId>fordastore</artifactId>
+  <groupId>com.splitscale.fordastore</groupId>
+  <artifactId>api</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>fordastore</name>
-  <description>splitscale fordastore web app core  API</description>
+  <name>api</name>
+  <description>fordastore web api</description>
 
   <properties>
     <java.version>17</java.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
   </properties>
 
   <dependencies>
-    <!-- FOR TEST -->
+    <dependency>
+      <groupId>com.splitscale.shield</groupId>
+      <artifactId>shield</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
     <dependency>
@@ -40,39 +42,24 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
-    <dependency>
-      <groupId>com.mysql</groupId>
-      <artifactId>mysql-connector-j</artifactId>
-      <version>8.0.31</version>
-    </dependency>
-
-    <!-- SPRING BOOT -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-groovy-templates</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-jdbc</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-
     </plugins>
   </build>
 
