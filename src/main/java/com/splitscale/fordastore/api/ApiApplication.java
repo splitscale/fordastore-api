@@ -1,13 +1,13 @@
-package com.splitscale.api.fordastore;
+package com.splitscale.fordastore.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FordastoreApplication {
+public class ApiApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(FordastoreApplication.class, args);
+    SpringApplication.run(ApiApplication.class, args);
   }
 
 }
