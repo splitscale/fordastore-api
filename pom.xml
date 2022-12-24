@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
@@ -20,6 +20,19 @@
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>com.splitscale.ditabys</groupId>
+      <artifactId>ditabys</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.splitscale.fordastore.core</groupId>
+      <artifactId>fordastore-core</artifactId>
+      <version>1.0</version>
+    </dependency>
+
     <dependency>
       <groupId>com.splitscale.shield</groupId>
       <artifactId>shield</artifactId>
@@ -38,7 +51,6 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>5.9.1</version>
       <scope>test</scope>
     </dependency>
 
