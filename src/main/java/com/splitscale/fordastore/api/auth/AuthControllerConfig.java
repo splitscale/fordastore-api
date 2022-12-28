@@ -5,23 +5,47 @@ import org.springframework.context.annotation.Configuration;
 
 import com.splitscale.ditabys.repositories.AuthRepositoryInteractor;
 import com.splitscale.ditabys.repositories.UserRepositoryInteractor;
+import com.splitscale.fordastore.core.user.login.LoginInteractor;
 import com.splitscale.fordastore.core.user.register.RegisterInteractor;
+import com.splitscale.shield.endpoints.LoginEndpoint;
 import com.splitscale.shield.endpoints.RegisterEndpoint;
 import com.splitscale.shield.jwt.JwtInteractor;
 
 @Configuration
 public class AuthControllerConfig {
 
-  private RegisterInteractor getRegisterInteractor() {
-    return new RegisterInteractor(new UserRepositoryInteractor());
-  }
-
-  private JwtInteractor getJKwtInteractor() {
-    return new JwtInteractor(new AuthRepositoryInteractor());
+  @Bean
+  public UserRepositoryInteractor getUserRepositoryInteractor() {
+    return new UserRepositoryInteractor();
   }
 
   @Bean
-  public RegisterEndpoint registerEndpoint() {
-    return new RegisterEndpoint(getRegisterInteractor(), getJKwtInteractor());
+  public AuthRepositoryInteractor getAuthRepositoryInteractor() {
+    return new AuthRepositoryInteractor();
+  }
+
+  @Bean
+  public RegisterInteractor getRegisterInteractor(UserRepositoryInteractor userRepositoryInteractor) {
+    return new RegisterInteractor(userRepositoryInteractor);
+  }
+
+  @Bean
+  public LoginInteractor getLoginInteractor(UserRepositoryInteractor userRepositoryInteractor) {
+    return new LoginInteractor(userRepositoryInteractor);
+  }
+
+  @Bean
+  public JwtInteractor getJwtInteractor(AuthRepositoryInteractor authRepositoryInteractor) {
+    return new JwtInteractor(authRepositoryInteractor);
+  }
+
+  @Bean
+  public RegisterEndpoint registerEndpoint(RegisterInteractor registerInteractor) {
+    return new RegisterEndpoint(registerInteractor);
+  }
+
+  @Bean
+  public LoginEndpoint loginEndpoint(LoginInteractor loginInteractor, JwtInteractor jwtInteractor) {
+    return new LoginEndpoint(loginInteractor, jwtInteractor);
   }
 }

@@ -1,0 +1,10 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "cSpell.words": [
+    "Bpropsable",
+    "classpath",
+    "Crudable",
+    "fordastore"
+  ],
+  "java.compile.nullAnalysis.mode": "automatic"
+}
