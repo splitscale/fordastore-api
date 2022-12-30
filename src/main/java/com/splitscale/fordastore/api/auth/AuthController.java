@@ -17,7 +17,7 @@ import com.splitscale.shield.endpoints.LoginEndpoint;
 import com.splitscale.shield.endpoints.RegisterEndpoint;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization")
 @RequestMapping("/auth")
 public class AuthController {
   private RegisterEndpoint registerEndpoint;
@@ -34,10 +34,18 @@ public class AuthController {
     try {
       registerEndpoint.register(userRequest);
 
+      System.out.println("POST register: " + HttpStatus.OK.toString());
+
       return new ResponseEntity<String>(HttpStatus.OK);
     } catch (IllegalArgumentException e) {
+      System.out.println("POST register: " + HttpStatus.BAD_REQUEST.toString());
+      System.out.println(e.getMessage());
+
       return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     } catch (IOException e) {
+      System.out.println("POST register: " + HttpStatus.INTERNAL_SERVER_ERROR.toString());
+      System.out.println(e.getMessage());
+
       return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -54,12 +62,21 @@ public class AuthController {
       final String jwt = loginEndpoint.login(userRequest);
 
       // Add a header to the headers collection
-      headers.add("Authorization", jwt);
+      headers.add("Authorization", "Bearer " + jwt);
 
-      return new ResponseEntity<String>(headers, HttpStatus.OK);
+      System.out.println("POST login: " + HttpStatus.OK.toString());
+      System.out.println("Authorization: " + jwt);
+
+      return new ResponseEntity<String>("success", headers, HttpStatus.OK);
     } catch (IllegalArgumentException e) {
+      System.out.println("POST login: " + HttpStatus.BAD_REQUEST.toString());
+      System.out.println(e.getMessage());
+
       return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
     } catch (IOException e) {
+      System.out.println("POST login: " + HttpStatus.INTERNAL_SERVER_ERROR.toString());
+      System.out.println(e.getMessage());
+
       return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
