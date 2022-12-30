@@ -9,7 +9,7 @@ import com.splitscale.fordastore.core.user.login.LoginInteractor;
 import com.splitscale.fordastore.core.user.register.RegisterInteractor;
 import com.splitscale.shield.endpoints.LoginEndpoint;
 import com.splitscale.shield.endpoints.RegisterEndpoint;
-import com.splitscale.shield.jwt.JwtInteractor;
+import com.splitscale.shield.auth.AuthPublicKeyInteractor;
 
 @Configuration
 public class AuthControllerConfig {
@@ -35,8 +35,8 @@ public class AuthControllerConfig {
   }
 
   @Bean
-  public JwtInteractor getJwtInteractor(AuthRepositoryInteractor authRepositoryInteractor) {
-    return new JwtInteractor(authRepositoryInteractor);
+  public AuthPublicKeyInteractor getAuthPublicKeyInteractor(AuthRepositoryInteractor authRepositoryInteractor) {
+    return new AuthPublicKeyInteractor(authRepositoryInteractor);
   }
 
   @Bean
@@ -45,7 +45,7 @@ public class AuthControllerConfig {
   }
 
   @Bean
-  public LoginEndpoint loginEndpoint(LoginInteractor loginInteractor, JwtInteractor jwtInteractor) {
-    return new LoginEndpoint(loginInteractor, jwtInteractor);
+  public LoginEndpoint loginEndpoint(LoginInteractor loginInteractor, AuthPublicKeyInteractor authPublicKeyInteractor) {
+    return new LoginEndpoint(loginInteractor, authPublicKeyInteractor);
   }
 }
