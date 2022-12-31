@@ -8,6 +8,7 @@ import com.splitscale.ditabys.repositories.UserRepositoryInteractor;
 import com.splitscale.fordastore.core.user.login.LoginInteractor;
 import com.splitscale.fordastore.core.user.register.RegisterInteractor;
 import com.splitscale.shield.endpoints.LoginEndpoint;
+import com.splitscale.shield.endpoints.LogoutEndpoint;
 import com.splitscale.shield.endpoints.RegisterEndpoint;
 import com.splitscale.shield.auth.AuthPublicKeyInteractor;
 
@@ -47,5 +48,10 @@ public class AuthControllerConfig {
   @Bean
   public LoginEndpoint loginEndpoint(LoginInteractor loginInteractor, AuthPublicKeyInteractor authPublicKeyInteractor) {
     return new LoginEndpoint(loginInteractor, authPublicKeyInteractor);
+  }
+
+  @Bean
+  public LogoutEndpoint getLogoutEndpoint(AuthPublicKeyInteractor authPublicKeyInteractor) {
+    return new LogoutEndpoint(authPublicKeyInteractor);
   }
 }
