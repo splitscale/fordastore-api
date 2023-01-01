@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.splitscale.ditabys.repositories.ContainerRepositoryInteractor;
 import com.splitscale.fordastore.core.container.create.CreateContainerInteractor;
-import com.splitscale.shield.auth.AuthPublicKeyInteractor;
 import com.splitscale.shield.endpoints.ContainerEndpoint;
 
 @Configuration
@@ -22,8 +21,7 @@ public class CreateContainerControllerConfig {
   }
 
   @Bean
-  public ContainerEndpoint getContainerEndpoint(CreateContainerInteractor containerInteractor,
-      AuthPublicKeyInteractor authPublicKeyInteractor) {
-    return new ContainerEndpoint(containerInteractor, authPublicKeyInteractor);
+  public ContainerEndpoint getContainerEndpoint(CreateContainerInteractor containerInteractor) {
+    return new ContainerEndpoint(containerInteractor);
   }
 }
