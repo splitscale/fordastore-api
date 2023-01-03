@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.splitscale.ditabys.repositories.UserRepositoryInteractor;
-import com.splitscale.fordastore.core.user.login.LoginInteractor;
-import com.splitscale.fordastore.core.user.register.RegisterInteractor;
-import com.splitscale.shield.endpoints.LoginEndpoint;
-import com.splitscale.shield.endpoints.RegisterEndpoint;
+import com.splitscale.fordastore.core.user.add.AddUserInteractor;
+import com.splitscale.fordastore.core.user.get.GetUserInteractor;
+import com.splitscale.shield.endpoints.auth.LoginEndpoint;
+import com.splitscale.shield.endpoints.auth.RegisterEndpoint;
 
 @Configuration
 public class AuthControllerConfig {
@@ -18,22 +18,22 @@ public class AuthControllerConfig {
   }
 
   @Bean
-  public RegisterInteractor getRegisterInteractor(UserRepositoryInteractor userRepositoryInteractor) {
-    return new RegisterInteractor(userRepositoryInteractor);
+  public AddUserInteractor getRegisterInteractor(UserRepositoryInteractor userRepositoryInteractor) {
+    return new AddUserInteractor(userRepositoryInteractor);
   }
 
   @Bean
-  public LoginInteractor getLoginInteractor(UserRepositoryInteractor userRepositoryInteractor) {
-    return new LoginInteractor(userRepositoryInteractor);
+  public GetUserInteractor getLoginInteractor(UserRepositoryInteractor userRepositoryInteractor) {
+    return new GetUserInteractor(userRepositoryInteractor);
   }
 
   @Bean
-  public RegisterEndpoint registerEndpoint(RegisterInteractor registerInteractor) {
+  public RegisterEndpoint registerEndpoint(AddUserInteractor registerInteractor) {
     return new RegisterEndpoint(registerInteractor);
   }
 
   @Bean
-  public LoginEndpoint loginEndpoint(LoginInteractor loginInteractor) {
+  public LoginEndpoint loginEndpoint(GetUserInteractor loginInteractor) {
     return new LoginEndpoint(loginInteractor);
   }
 }

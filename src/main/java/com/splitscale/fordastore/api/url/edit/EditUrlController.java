@@ -1,4 +1,4 @@
-package com.splitscale.fordastore.api.container.create;
+package com.splitscale.fordastore.api.url.edit;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -7,35 +7,38 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.Container;
-import com.splitscale.fordastore.core.container.ContainerRequest;
-import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
+import com.splitscale.fordastore.core.url.Url;
+import com.splitscale.fordastore.core.url.UrlResponse;
+import com.splitscale.shield.endpoints.url.edit.EditUrlEndpoint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
-@RequestMapping("/api/containers")
-public class CreateContainerController {
-  CreateContainerEndpoint endpoint;
+@RequestMapping("/api/urls")
+public class EditUrlController {
+  EditUrlEndpoint endpoint;
 
-  public CreateContainerController(CreateContainerEndpoint endpoint) {
+  public EditUrlController(EditUrlEndpoint endpoint) {
     this.endpoint = endpoint;
   }
 
   @ResponseBody
-  @PostMapping
-  public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
-      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
+  @PutMapping(path = "/{urlId}")
+  public ResponseEntity<UrlResponse> createContainer(@RequestBody Url url,
+      @RequestHeader(value = "authorization") String jwsToken)
+      throws IOException, GeneralSecurityException {
 
-    Container container = endpoint.create(containerRequest, jwsToken);
+    endpoint.edit(url, jwsToken);
 
-    return new ResponseEntity<Container>(container, HttpStatus.OK);
+    UrlResponse urlResponse = new UrlResponse(url.getUrlID(), url.getInnerUrl());
+
+    return new ResponseEntity<UrlResponse>(urlResponse, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
@@ -52,4 +55,5 @@ public class CreateContainerController {
   public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
+
 }

@@ -1,4 +1,4 @@
-package com.splitscale.fordastore.api.container.create;
+package com.splitscale.fordastore.api.url.delete;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -6,36 +6,34 @@ import java.security.GeneralSecurityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.Container;
-import com.splitscale.fordastore.core.container.ContainerRequest;
-import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
+import com.splitscale.shield.endpoints.url.delete.DeleteUrlEndpoint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
-@RequestMapping("/api/containers")
-public class CreateContainerController {
-  CreateContainerEndpoint endpoint;
+@RequestMapping("/api/urls")
+public class DeleteUrlController {
+  DeleteUrlEndpoint endpoint;
 
-  public CreateContainerController(CreateContainerEndpoint endpoint) {
+  public DeleteUrlController(DeleteUrlEndpoint endpoint) {
     this.endpoint = endpoint;
   }
 
   @ResponseBody
-  @PostMapping
-  public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
+  @DeleteMapping(path = "/{urlId}")
+  public ResponseEntity<String> deleteUrl(@PathVariable Long urlId,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-    Container container = endpoint.create(containerRequest, jwsToken);
+    endpoint.delete(urlId, jwsToken);
 
-    return new ResponseEntity<Container>(container, HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

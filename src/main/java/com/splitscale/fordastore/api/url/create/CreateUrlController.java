@@ -1,4 +1,4 @@
-package com.splitscale.fordastore.api.container.create;
+package com.splitscale.fordastore.api.url.create;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -14,28 +14,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.Container;
-import com.splitscale.fordastore.core.container.ContainerRequest;
-import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
+import com.splitscale.fordastore.core.url.Url;
+import com.splitscale.fordastore.core.url.UrlRequest;
+import com.splitscale.fordastore.core.url.UrlResponse;
+import com.splitscale.shield.endpoints.url.create.CreateUrlEndpoint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
-@RequestMapping("/api/containers")
-public class CreateContainerController {
-  CreateContainerEndpoint endpoint;
+@RequestMapping("/api/urls")
+public class CreateUrlController {
+  CreateUrlEndpoint endpoint;
 
-  public CreateContainerController(CreateContainerEndpoint endpoint) {
+  public CreateUrlController(CreateUrlEndpoint endpoint) {
     this.endpoint = endpoint;
   }
 
   @ResponseBody
-  @PostMapping
-  public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
+  @PostMapping(path = "/create")
+  public ResponseEntity<UrlResponse> createUrl(@RequestBody UrlRequest urlRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-    Container container = endpoint.create(containerRequest, jwsToken);
+    Url url = endpoint.create(urlRequest, jwsToken);
 
-    return new ResponseEntity<Container>(container, HttpStatus.OK);
+    UrlResponse urlResponse = new UrlResponse(url.getUrlID(), urlRequest.getInnerUrl());
+
+    return new ResponseEntity<UrlResponse>(urlResponse, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
