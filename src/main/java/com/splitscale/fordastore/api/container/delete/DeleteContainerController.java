@@ -29,9 +29,9 @@ public class DeleteContainerController {
   @ResponseBody
   @DeleteMapping(path = "/delete")
   public ResponseEntity<String> createContainer(@RequestBody Long containerId,
-      @RequestHeader(value = "uid") String uid) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-    endpoint.delete(containerId, uid);
+    endpoint.delete(containerId, jwsToken);
 
     return new ResponseEntity<>(HttpStatus.OK);
   }

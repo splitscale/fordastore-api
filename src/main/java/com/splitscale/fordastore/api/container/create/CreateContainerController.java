@@ -31,9 +31,9 @@ public class CreateContainerController {
   @ResponseBody
   @PostMapping
   public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
-      @RequestHeader(value = "uid") String uid) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-    Container container = endpoint.create(containerRequest, uid);
+    Container container = endpoint.create(containerRequest, jwsToken);
 
     return new ResponseEntity<Container>(container, HttpStatus.OK);
   }
