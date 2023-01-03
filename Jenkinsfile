@@ -1,5 +1,5 @@
 def runServer() {
-  sh 'docker run --name dev-api -p 28762:28762 -d splitscale/api:latest'
+  sh 'docker run --name fordastore-api -p 28762:28762 -d splitscale/fordastore-api:latest'
 }
 
 pipeline {
@@ -25,6 +25,14 @@ pipeline {
       }
         }
 
+        stage('test') {
+      steps {
+        script {
+          sh 'mvn clean test'
+        }
+      }
+        }
+
         stage('install') {
       steps {
         script {
@@ -35,7 +43,7 @@ pipeline {
 
         stage('build docker image') {
       steps {
-        sh 'docker build -f dev.Dockerfile -t splitscale/api:latest .'
+        sh 'docker build -t splitscale/fordastore-api:latest .'
       }
         }
 
@@ -43,11 +51,11 @@ pipeline {
           steps {
             script {
               try {
-                runServer()
+            runServer()
                         } catch (Exception e) {
-                sh 'docker stop dev-api'
-                sh 'docker rm dev-api'
-                runServer()
+            sh 'docker stop fordastore-api'
+            sh 'docker rm fordastore-api'
+            runServer()
               }
             }
           }
