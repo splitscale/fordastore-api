@@ -1,4 +1,4 @@
-package com.splitscale.fordastore.api.container.create;
+package com.splitscale.fordastore.api.url.create;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -13,25 +13,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.ContainerRequest;
-import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
+import com.splitscale.fordastore.core.url.UrlRequest;
+import com.splitscale.shield.endpoints.url.create.CreateUrlEndpoint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/container")
-public class CreateContainerController {
-   CreateContainerEndpoint endpoint;
+public class CreateUrlController {
+  CreateUrlEndpoint endpoint;
 
-  public CreateContainerController(CreateContainerEndpoint endpoint) {
+  public CreateUrlController(CreateUrlEndpoint endpoint) {
     this.endpoint = endpoint;
-  }  
-  
+  }
+
   @ResponseBody
   @PostMapping(path = "/create")
-  public ResponseEntity<String> createContainer(@RequestBody ContainerRequest containerRequest,@RequestHeader(value = "uid") String uid)
+  public ResponseEntity<String> createContainer(@RequestBody UrlRequest urlRequest,@RequestHeader(value = "uid") String uid)
     {
     try {
-      endpoint.create(containerRequest, uid);
+      endpoint.create(urlRequest, uid);
 
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (IllegalArgumentException e) {

@@ -1,4 +1,4 @@
-package com.splitscale.fordastore.api.container.create;
+package com.splitscale.fordastore.api.url.delete;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -13,25 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.ContainerRequest;
-import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
+import com.splitscale.shield.endpoints.url.delete.DeleteUrlEndpoint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/container")
-public class CreateContainerController {
-   CreateContainerEndpoint endpoint;
+public class DeleteUrlController {
+  DeleteUrlEndpoint endpoint;
 
-  public CreateContainerController(CreateContainerEndpoint endpoint) {
+  public DeleteUrlController(DeleteUrlEndpoint endpoint) {
     this.endpoint = endpoint;
-  }  
-  
+  }
+
   @ResponseBody
-  @PostMapping(path = "/create")
-  public ResponseEntity<String> createContainer(@RequestBody ContainerRequest containerRequest,@RequestHeader(value = "uid") String uid)
+  @PostMapping(path = "/delete")
+  public ResponseEntity<String> createContainer(@RequestBody Long containerId,@RequestHeader(value = "uid") String uid)
     {
     try {
-      endpoint.create(containerRequest, uid);
+      endpoint.delete(containerId, uid);
 
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (IllegalArgumentException e) {

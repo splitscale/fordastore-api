@@ -1,4 +1,4 @@
-package com.splitscale.fordastore.api.container.create;
+package com.splitscale.fordastore.api.container.delete;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -6,32 +6,31 @@ import java.security.GeneralSecurityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.ContainerRequest;
-import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
+import com.splitscale.shield.endpoints.container.delete.DeleteContainerEndpoint;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/container")
-public class CreateContainerController {
-   CreateContainerEndpoint endpoint;
+public class DeleteContainerController {
+  DeleteContainerEndpoint endpoint;
 
-  public CreateContainerController(CreateContainerEndpoint endpoint) {
+  public DeleteContainerController(DeleteContainerEndpoint endpoint) {
     this.endpoint = endpoint;
-  }  
-  
+  }
+
   @ResponseBody
-  @PostMapping(path = "/create")
-  public ResponseEntity<String> createContainer(@RequestBody ContainerRequest containerRequest,@RequestHeader(value = "uid") String uid)
+  @DeleteMapping(path = "/delete")
+  public ResponseEntity<String> createContainer(@RequestBody Long containerId,@RequestHeader(value = "uid") String uid)
     {
     try {
-      endpoint.create(containerRequest, uid);
+      endpoint.delete(containerId, uid);
 
       return new ResponseEntity<>(HttpStatus.OK);
     } catch (IllegalArgumentException e) {
