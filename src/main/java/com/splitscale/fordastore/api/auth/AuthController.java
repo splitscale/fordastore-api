@@ -9,17 +9,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.splitscale.fordastore.core.user.UserRequest;
 import com.splitscale.fordastore.core.user.UserResponse;
-import com.splitscale.shield.endpoints.LoginEndpoint;
-import com.splitscale.shield.endpoints.RegisterEndpoint;
+import com.splitscale.shield.endpoints.auth.LoginEndpoint;
+import com.splitscale.shield.endpoints.auth.RegisterEndpoint;
 import com.splitscale.shield.response.LoginResponse;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
+@RequestMapping("/api/auth")
 public class AuthController {
   private RegisterEndpoint registerEndpoint;
   private LoginEndpoint loginEndpoint;

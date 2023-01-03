@@ -6,8 +6,9 @@ import java.security.GeneralSecurityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.splitscale.shield.endpoints.url.delete.DeleteUrlEndpoint;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/container")
+@CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
+@RequestMapping("/api/urls")
 public class DeleteUrlController {
   DeleteUrlEndpoint endpoint;
 
@@ -26,19 +27,27 @@ public class DeleteUrlController {
   }
 
   @ResponseBody
-  @PostMapping(path = "/delete")
-  public ResponseEntity<String> createContainer(@RequestBody Long containerId,@RequestHeader(value = "uid") String uid)
-    {
-    try {
-      endpoint.delete(containerId, uid);
+  @DeleteMapping(path = "/{urlId}")
+  public ResponseEntity<String> deleteUrl(@PathVariable Long urlId,
+      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-      return new ResponseEntity<>(HttpStatus.OK);
-    } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-    } catch (IOException e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    } catch (GeneralSecurityException e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
+    endpoint.delete(urlId, jwsToken);
+
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(IOException.class)
+  public ResponseEntity<String> handleInternalServerError(IOException e) {
+    return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(GeneralSecurityException.class)
+  public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
+    return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
 }
