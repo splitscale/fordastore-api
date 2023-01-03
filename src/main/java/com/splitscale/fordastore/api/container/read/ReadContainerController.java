@@ -32,7 +32,7 @@ public class ReadContainerController {
   }
 
   @ResponseBody
-  @GetMapping(path = "/{cid}")
+  @GetMapping(path = "/{containerId}")
   public ResponseEntity<ContainerResponse> readContainer(@PathVariable Long containerId,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
