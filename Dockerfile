@@ -1,10 +1,10 @@
 FROM openjdk:17
 
-WORKDIR /fordastore/api
+WORKDIR /fordastore
 
-COPY ./target/api-0.0.1-SNAPSHOT.jar /fordastore/api
+COPY ./target/api-0.0.1-SNAPSHOT.jar /fordastore
 
-COPY ./src/main/resources/ /fordastore/api
+COPY ./src/main/resources/ /fordastore
 
 EXPOSE 8081
 
