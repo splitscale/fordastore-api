@@ -28,20 +28,6 @@ public class PingController {
   }
 
   @GetMapping("/db")
-  public ResponseEntity<String> returnDbConnectionStatus() {
-    String url = "jdbc:mysql://mysql:3306/store?allowPublicKeyRetrieval=true&useSSL=false";
-    String user = "client";
-    String password = "splitscale";
-
-    try {
-      Connection conn = DriverManager.getConnection(url, user, password);
-      return new ResponseEntity<>("Connected to Database: " + conn.getClientInfo(), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>("Database connection error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
-  @GetMapping("/db/real")
   public ResponseEntity<String> returnDbConnectionStatusViaPropertiesFile() {
 
     Properties props = new Properties();
@@ -68,7 +54,7 @@ public class PingController {
 
     try {
       Connection conn = DriverManager.getConnection(url, user, password);
-      return new ResponseEntity<>("Connected to Database: " + conn.getClientInfo(), HttpStatus.OK);
+      return new ResponseEntity<>("Connected to Database: " + conn.getMetaData(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>("Database connection error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
