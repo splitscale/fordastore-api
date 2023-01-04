@@ -1,18 +1,21 @@
 package com.splitscale.fordastore.api.ping;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Properties;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.ditabys.driver.StoreDbDriver;
+import com.splitscale.ditabys.config.DBconfig;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -21,7 +24,7 @@ public class PingController {
 
   @GetMapping
   public ResponseEntity<String> ping() {
-    return new ResponseEntity<>("hello", HttpStatus.OK);
+    return new ResponseEntity<>("hello from splitscale", HttpStatus.OK);
   }
 
   @GetMapping("/db")
@@ -31,26 +34,41 @@ public class PingController {
     String password = "splitscale";
 
     try {
-
-      DriverManager.getConnection(url, user, password);
-      return new ResponseEntity<>("Connected to Database", HttpStatus.OK);
+      Connection conn = DriverManager.getConnection(url, user, password);
+      return new ResponseEntity<>("Connected to Database: " + conn.getClientInfo(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>("Database connection error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @PostMapping
-  public ResponseEntity<String> ping(@RequestBody String challenge) throws IllegalArgumentException {
+  @GetMapping("/db/real")
+  public ResponseEntity<String> returnDbConnectionStatusViaPropertiesFile() {
 
-    if (challenge.equals("hi")) {
-      return new ResponseEntity<>("hello", HttpStatus.OK);
+    Properties props = new Properties();
+    InputStream fileStream;
+
+    try {
+      fileStream = new FileInputStream("src/main/resources/store-db.properties");
+      props.load(fileStream);
+
+    } catch (FileNotFoundException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    } catch (IOException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    throw new IllegalArgumentException("should say hi");
+    DBconfig config = new DBconfig(props);
+
+    String url = config.getUrl();
+    String user = config.getUsername();
+    String password = config.getPassword();
+
+    try {
+      Connection conn = DriverManager.getConnection(url, user, password);
+      return new ResponseEntity<>("Connected to Database: " + conn.getClientInfo(), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Database connection error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-  }
 }
