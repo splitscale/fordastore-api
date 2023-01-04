@@ -48,11 +48,14 @@ public class PingController {
     InputStream fileStream;
 
     try {
-      fileStream = new FileInputStream("src/main/resources/store-db.properties");
+      fileStream = new FileInputStream("./store-db.properties");
       props.load(fileStream);
 
     } catch (FileNotFoundException e) {
-      return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+      return new ResponseEntity<>(
+          " If you are placing files into the resource dir, then they should be read as classpath resources: "
+              + e.getMessage(),
+          HttpStatus.NOT_FOUND);
     } catch (IOException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
