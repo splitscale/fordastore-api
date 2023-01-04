@@ -1,8 +1,8 @@
 FROM openjdk:17
 
-WORKDIR /fordastore/dev
+WORKDIR /fordastore/api
 
-COPY ./target/api-0.0.1-SNAPSHOT.jar /fordastore/dev
+COPY ./target/api-0.0.1-SNAPSHOT.jar /fordastore/api
 
 EXPOSE 8081
 
