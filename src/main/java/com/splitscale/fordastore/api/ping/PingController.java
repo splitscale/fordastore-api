@@ -26,10 +26,13 @@ public class PingController {
 
   @GetMapping("/db")
   public ResponseEntity<String> returnDbConnectionStatus() {
-    StoreDbDriver storeDbDriver = new StoreDbDriver();
+    String url = "jdbc:mysql://mysql:3306/store?allowPublicKeyRetrieval=true&useSSL=false";
+    String user = "client";
+    String password = "splitscale";
 
     try {
-      storeDbDriver.getConnection();
+
+      DriverManager.getConnection(url, user, password);
       return new ResponseEntity<>("Connected to Database", HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>("Database connection error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
