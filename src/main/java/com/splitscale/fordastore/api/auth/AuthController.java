@@ -21,7 +21,6 @@ import com.splitscale.shield.endpoints.auth.RegisterEndpoint;
 import com.splitscale.shield.response.LoginResponse;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
 @RequestMapping("/api/auth")
 public class AuthController {
   private RegisterEndpoint registerEndpoint;
@@ -46,6 +45,7 @@ public class AuthController {
   }
 
   @ResponseBody
+  @CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization")
   @PostMapping(path = "/login")
   public ResponseEntity<UserResponse> login(@RequestBody UserRequest userRequest)
       throws IllegalArgumentException, IOException {
