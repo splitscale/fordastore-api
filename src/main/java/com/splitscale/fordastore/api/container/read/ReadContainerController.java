@@ -36,8 +36,6 @@ public class ReadContainerController {
 
     ContainerResponse containerResponse = endpoint.readByContainerId(containerId, jwsToken);
 
-    System.out.println("authorization: " + jwsToken);
-
     return new ResponseEntity<>(containerResponse, HttpStatus.OK);
   }
 
@@ -47,6 +45,9 @@ public class ReadContainerController {
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     List<ContainerResponse> containers = endpoint.readListByUid(uid, jwsToken);
+
+    System.out.println("uid: " + uid);
+    System.out.println("authorization: " + jwsToken);
 
     return new ResponseEntity<List<ContainerResponse>>(containers, HttpStatus.OK);
   }

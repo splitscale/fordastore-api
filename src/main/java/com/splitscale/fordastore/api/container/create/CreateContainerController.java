@@ -34,6 +34,9 @@ public class CreateContainerController {
   public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
+    System.out.println("uid: " + containerRequest.getUid());
+    System.out.println("authorization: " + jwsToken);
+
     Container container = endpoint.create(containerRequest, jwsToken);
 
     return new ResponseEntity<Container>(container, HttpStatus.OK);
