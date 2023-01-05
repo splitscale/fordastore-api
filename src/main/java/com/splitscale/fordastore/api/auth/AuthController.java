@@ -50,8 +50,10 @@ public class AuthController {
   public ResponseEntity<UserResponse> login(@RequestBody UserRequest userRequest)
       throws IllegalArgumentException, IOException {
 
-    WithCorsHeader withCorsHeaders = new WithCorsHeader();
-    HttpHeaders headers = withCorsHeaders.getHeaders();
+    // WithCorsHeader withCorsHeaders = new WithCorsHeader();
+    // HttpHeaders headers = withCorsHeaders.getHeaders();
+
+    HttpHeaders headers = new HttpHeaders();
 
     LoginResponse loginResponse = loginEndpoint.login(userRequest);
 
