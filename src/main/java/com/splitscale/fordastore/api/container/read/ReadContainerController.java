@@ -21,7 +21,7 @@ import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.read.ReadContainerEndpoint;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RequestMapping("/api/containers")
 public class ReadContainerController {
   ReadContainerEndpoint endpoint;
@@ -31,7 +31,7 @@ public class ReadContainerController {
   }
 
   @ResponseBody
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
+  // @CrossOrigin(allowedHeaders = "Authorization")
   @GetMapping(path = "/{containerId}")
   public ResponseEntity<ContainerResponse> readContainer(@PathVariable Long containerId,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
@@ -42,7 +42,7 @@ public class ReadContainerController {
   }
 
   @ResponseBody
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
+  // @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   @GetMapping
   public ResponseEntity<List<ContainerResponse>> readAllContainerByUser(@RequestParam String uid,
       @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
