@@ -19,7 +19,7 @@ import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.edit.EditUrlEndpoint;
 
 @RestController
-@CrossOrigin(allowedHeaders = "Authorization")
+@CrossOrigin(allowedHeaders = "authorization")
 @RequestMapping("/api/urls")
 public class EditUrlController {
   EditUrlEndpoint endpoint;

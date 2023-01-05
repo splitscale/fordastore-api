@@ -20,7 +20,7 @@ import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.create.CreateUrlEndpoint;
 
 @RestController
-@CrossOrigin(allowedHeaders = "Authorization")
+@CrossOrigin(allowedHeaders = "authorization")
 @RequestMapping("/api/urls")
 public class CreateUrlController {
   CreateUrlEndpoint endpoint;
