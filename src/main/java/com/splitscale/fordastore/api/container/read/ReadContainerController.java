@@ -36,6 +36,8 @@ public class ReadContainerController {
 
     ContainerResponse containerResponse = endpoint.readByContainerId(containerId, jwsToken);
 
+    System.out.println("authorization: " + jwsToken);
+
     return new ResponseEntity<>(containerResponse, HttpStatus.OK);
   }
 
