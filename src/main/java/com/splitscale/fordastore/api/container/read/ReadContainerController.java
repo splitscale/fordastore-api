@@ -20,10 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.read.ReadContainerEndpoint;
 
-import io.jsonwebtoken.Header;
-
 @RestController
 @RequestMapping("/api/containers")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class ReadContainerController {
   ReadContainerEndpoint endpoint;
 
@@ -46,16 +45,11 @@ public class ReadContainerController {
   @GetMapping
   @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<List<ContainerResponse>> readAllContainerByUser(@RequestParam String uid,
-      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     List<ContainerResponse> containers = endpoint.readListByUid(uid, jwsToken);
 
     return new ResponseEntity<List<ContainerResponse>>(containers, HttpStatus.OK);
-  }
-
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(IOException.class)
