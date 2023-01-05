@@ -43,7 +43,7 @@ public class ReadContainerController {
   @ResponseBody
   @GetMapping
   public ResponseEntity<List<ContainerResponse>> readAllContainerByUser(@RequestParam String uid,
-      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     List<ContainerResponse> containers = endpoint.readListByUid(uid, jwsToken);
 
