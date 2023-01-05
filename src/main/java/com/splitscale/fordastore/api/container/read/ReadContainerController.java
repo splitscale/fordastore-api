@@ -31,7 +31,6 @@ public class ReadContainerController {
   }
 
   @ResponseBody
-  // @CrossOrigin(allowedHeaders = "Authorization")
   @GetMapping(path = "/{containerId}")
   public ResponseEntity<ContainerResponse> readContainer(@PathVariable Long containerId,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
@@ -42,7 +41,6 @@ public class ReadContainerController {
   }
 
   @ResponseBody
-  // @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   @GetMapping
   public ResponseEntity<List<ContainerResponse>> readAllContainerByUser(@RequestParam String uid,
       @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {

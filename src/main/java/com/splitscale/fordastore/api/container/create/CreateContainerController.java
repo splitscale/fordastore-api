@@ -30,22 +30,13 @@ public class CreateContainerController {
 
   @ResponseBody
   @PostMapping
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
+  @CrossOrigin
   public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     Container container = endpoint.create(containerRequest, jwsToken);
 
-    // Access-Control-Allow-Origin: *
-    HttpHeaders headers = new HttpHeaders();
-    headers.add("Access-Control-Allow-Origin", "*");
-
-    return new ResponseEntity<Container>(container, headers, HttpStatus.OK);
-  }
-
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<Container>(container, HttpStatus.OK);
   }
 
   @ExceptionHandler(IOException.class)

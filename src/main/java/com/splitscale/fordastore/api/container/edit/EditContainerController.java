@@ -20,6 +20,7 @@ import com.splitscale.fordastore.core.container.ContainerRequest;
 import com.splitscale.shield.endpoints.container.edit.EditContainerEndpoint;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/container")
 public class EditContainerController {
   EditContainerEndpoint endpoint;
@@ -30,7 +31,6 @@ public class EditContainerController {
 
   @ResponseBody
   @PutMapping("/{id}")
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<Container> editContainer(@PathVariable Long cid, @RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
@@ -42,11 +42,6 @@ public class EditContainerController {
     endpoint.edit(container, jwsToken);
 
     return new ResponseEntity<Container>(container, HttpStatus.OK);
-  }
-
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(IOException.class)

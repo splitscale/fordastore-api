@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.splitscale.shield.endpoints.url.delete.DeleteUrlEndpoint;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/urls")
 public class DeleteUrlController {
   DeleteUrlEndpoint endpoint;
@@ -27,18 +28,12 @@ public class DeleteUrlController {
 
   @ResponseBody
   @DeleteMapping(path = "/{urlId}")
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<String> deleteUrl(@PathVariable Long urlId,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     endpoint.delete(urlId, jwsToken);
 
     return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(IOException.class)

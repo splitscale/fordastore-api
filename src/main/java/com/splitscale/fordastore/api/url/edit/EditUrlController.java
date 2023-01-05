@@ -19,7 +19,7 @@ import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.edit.EditUrlEndpoint;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
+@CrossOrigin
 @RequestMapping("/api/urls")
 public class EditUrlController {
   EditUrlEndpoint endpoint;
@@ -41,11 +41,6 @@ public class EditUrlController {
     return new ResponseEntity<UrlResponse>(urlResponse, HttpStatus.OK);
   }
 
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-  }
-
   @ExceptionHandler(IOException.class)
   public ResponseEntity<String> handleInternalServerError(IOException e) {
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,5 +50,4 @@ public class EditUrlController {
   public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
-
 }

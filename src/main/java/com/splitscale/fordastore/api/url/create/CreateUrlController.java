@@ -21,6 +21,7 @@ import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.create.CreateUrlEndpoint;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/urls")
 public class CreateUrlController {
   CreateUrlEndpoint endpoint;
@@ -31,7 +32,6 @@ public class CreateUrlController {
 
   @ResponseBody
   @PostMapping
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<UrlResponse> createUrl(@RequestBody UrlRequest urlRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
@@ -40,11 +40,6 @@ public class CreateUrlController {
     UrlResponse urlResponse = new UrlResponse(url.getUrlID(), urlRequest.getInnerUrl());
 
     return new ResponseEntity<UrlResponse>(urlResponse, HttpStatus.OK);
-  }
-
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(IOException.class)

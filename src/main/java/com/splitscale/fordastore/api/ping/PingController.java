@@ -18,17 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.splitscale.ditabys.config.DBconfig;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/ping")
 public class PingController {
 
   @GetMapping
-  @CrossOrigin(origins = "*", maxAge = 3600)
   public ResponseEntity<String> ping() {
     return new ResponseEntity<>("hello from splitscale", HttpStatus.OK);
   }
 
   @GetMapping("/db")
-  @CrossOrigin(origins = "*", maxAge = 3600)
   public ResponseEntity<String> returnDbConnectionStatusViaPropertiesFile() {
 
     Properties props = new Properties();

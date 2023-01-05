@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.splitscale.shield.endpoints.container.delete.DeleteContainerEndpoint;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/container")
 public class DeleteContainerController {
   DeleteContainerEndpoint endpoint;
@@ -27,9 +28,8 @@ public class DeleteContainerController {
 
   @ResponseBody
   @DeleteMapping(path = "/delete")
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<String> createContainer(@RequestBody Long containerId,
-      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     endpoint.delete(containerId, jwsToken);
 
