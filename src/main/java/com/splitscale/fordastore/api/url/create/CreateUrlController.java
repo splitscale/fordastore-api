@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.api.cors.WithCorsHeader;
 import com.splitscale.fordastore.core.url.Url;
 import com.splitscale.fordastore.core.url.UrlRequest;
 import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.create.CreateUrlEndpoint;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
 @RequestMapping("/api/urls")
 public class CreateUrlController {
   CreateUrlEndpoint endpoint;
@@ -33,6 +31,7 @@ public class CreateUrlController {
 
   @ResponseBody
   @PostMapping
+  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<UrlResponse> createUrl(@RequestBody UrlRequest urlRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
@@ -40,10 +39,7 @@ public class CreateUrlController {
 
     UrlResponse urlResponse = new UrlResponse(url.getUrlID(), urlRequest.getInnerUrl());
 
-    WithCorsHeader withCorsHeaders = new WithCorsHeader();
-    HttpHeaders headers = withCorsHeaders.getHeaders();
-
-    return new ResponseEntity<UrlResponse>(urlResponse, headers, HttpStatus.OK);
+    return new ResponseEntity<UrlResponse>(urlResponse, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

@@ -3,7 +3,6 @@ package com.splitscale.fordastore.api.container.create;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.api.cors.WithCorsHeader;
 import com.splitscale.fordastore.core.container.Container;
 import com.splitscale.fordastore.core.container.ContainerRequest;
 import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
 @RequestMapping("/api/containers")
 public class CreateContainerController {
   CreateContainerEndpoint endpoint;
@@ -32,15 +29,13 @@ public class CreateContainerController {
 
   @ResponseBody
   @PostMapping
+  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     Container container = endpoint.create(containerRequest, jwsToken);
 
-    WithCorsHeader withCorsHeaders = new WithCorsHeader();
-    HttpHeaders headers = withCorsHeaders.getHeaders();
-
-    return new ResponseEntity<Container>(container, headers, HttpStatus.OK);
+    return new ResponseEntity<Container>(container, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

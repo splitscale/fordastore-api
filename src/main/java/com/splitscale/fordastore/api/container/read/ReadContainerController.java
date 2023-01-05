@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.api.cors.WithCorsHeader;
 import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.read.ReadContainerEndpoint;
 
 import io.jsonwebtoken.Header;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
 @RequestMapping("/api/containers")
 public class ReadContainerController {
   ReadContainerEndpoint endpoint;
@@ -35,28 +33,24 @@ public class ReadContainerController {
 
   @ResponseBody
   @GetMapping(path = "/{containerId}")
+  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<ContainerResponse> readContainer(@PathVariable Long containerId,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     ContainerResponse containerResponse = endpoint.readByContainerId(containerId, jwsToken);
 
-    WithCorsHeader withCorsHeaders = new WithCorsHeader();
-    HttpHeaders headers = withCorsHeaders.getHeaders();
-
-    return new ResponseEntity<>(containerResponse, headers, HttpStatus.OK);
+    return new ResponseEntity<>(containerResponse, HttpStatus.OK);
   }
 
   @ResponseBody
   @GetMapping
+  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<List<ContainerResponse>> readAllContainerByUser(@RequestParam String uid,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     List<ContainerResponse> containers = endpoint.readListByUid(uid, jwsToken);
 
-    WithCorsHeader withCorsHeaders = new WithCorsHeader();
-    HttpHeaders headers = withCorsHeaders.getHeaders();
-
-    return new ResponseEntity<List<ContainerResponse>>(containers, headers, HttpStatus.OK);
+    return new ResponseEntity<List<ContainerResponse>>(containers, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
