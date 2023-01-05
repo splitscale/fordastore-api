@@ -3,6 +3,7 @@ package com.splitscale.fordastore.api.container.create;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,13 +30,17 @@ public class CreateContainerController {
 
   @ResponseBody
   @PostMapping
-  @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowedHeaders = "Authorization")
+  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     Container container = endpoint.create(containerRequest, jwsToken);
 
-    return new ResponseEntity<Container>(container, HttpStatus.OK);
+    // Access-Control-Allow-Origin: *
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Access-Control-Allow-Origin", "*");
+
+    return new ResponseEntity<Container>(container, headers, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
