@@ -19,7 +19,7 @@ import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.edit.EditUrlEndpoint;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(allowedHeaders = "Authorization")
 @RequestMapping("/api/urls")
 public class EditUrlController {
   EditUrlEndpoint endpoint;
@@ -31,7 +31,7 @@ public class EditUrlController {
   @ResponseBody
   @PutMapping(path = "/{urlId}")
   public ResponseEntity<UrlResponse> createContainer(@RequestBody Url url,
-      @RequestHeader(value = "authorization") String jwsToken)
+      @RequestHeader(value = "Authorization") String jwsToken)
       throws IOException, GeneralSecurityException {
 
     endpoint.edit(url, jwsToken);

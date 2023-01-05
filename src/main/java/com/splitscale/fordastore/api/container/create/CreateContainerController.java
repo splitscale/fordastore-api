@@ -19,7 +19,7 @@ import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(allowedHeaders = "Authorization")
 @RequestMapping("/api/containers")
 public class CreateContainerController {
   CreateContainerEndpoint endpoint;
@@ -31,7 +31,7 @@ public class CreateContainerController {
   @ResponseBody
   @PostMapping
   public ResponseEntity<ContainerResponse> createContainer(@RequestBody ContainerRequest containerRequest,
-      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     ContainerResponse container = endpoint.create(containerRequest, jwsToken);
 

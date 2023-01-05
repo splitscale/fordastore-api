@@ -20,7 +20,7 @@ import com.splitscale.fordastore.core.container.ContainerRequest;
 import com.splitscale.shield.endpoints.container.edit.EditContainerEndpoint;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(allowedHeaders = "Authorization")
 @RequestMapping("/container")
 public class EditContainerController {
   EditContainerEndpoint endpoint;
@@ -32,7 +32,7 @@ public class EditContainerController {
   @ResponseBody
   @PutMapping("/{id}")
   public ResponseEntity<Container> editContainer(@PathVariable Long cid, @RequestBody ContainerRequest containerRequest,
-      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     Container container = new Container();
     container.setContainerID(cid);

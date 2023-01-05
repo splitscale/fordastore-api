@@ -3,7 +3,6 @@ package com.splitscale.fordastore.api.url.create;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +20,7 @@ import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.create.CreateUrlEndpoint;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(allowedHeaders = "Authorization")
 @RequestMapping("/api/urls")
 public class CreateUrlController {
   CreateUrlEndpoint endpoint;
@@ -33,7 +32,7 @@ public class CreateUrlController {
   @ResponseBody
   @PostMapping
   public ResponseEntity<UrlResponse> createUrl(@RequestBody UrlRequest urlRequest,
-      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     Url url = endpoint.create(urlRequest, jwsToken);
 
