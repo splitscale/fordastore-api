@@ -42,7 +42,6 @@ public class AuthController {
   }
 
   @ResponseBody
-  @CrossOrigin(origins = "*")
   @PostMapping(path = "/login")
   public ResponseEntity<UserResponse> login(@RequestBody UserRequest userRequest)
       throws IllegalArgumentException, IOException {
