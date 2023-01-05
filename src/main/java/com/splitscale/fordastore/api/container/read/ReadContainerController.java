@@ -44,21 +44,25 @@ public class ReadContainerController {
   public ResponseEntity<List<ContainerResponse>> readAllContainerByUser(@RequestParam String uid,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-    List<ContainerResponse> containers = endpoint.readListByUid(uid, jwsToken);
+    System.out.println("[/api/containers] uid: " + uid);
+    System.out.println("[/api/containers] authorization: " + jwsToken);
 
-    System.out.println("uid: " + uid);
-    System.out.println("authorization: " + jwsToken);
+    List<ContainerResponse> containers = endpoint.readListByUid(uid, jwsToken);
 
     return new ResponseEntity<List<ContainerResponse>>(containers, HttpStatus.OK);
   }
 
   @ExceptionHandler(IOException.class)
   public ResponseEntity<String> handleInternalServerError(IOException e) {
+    System.out.println("[/api/containers] IOException: " + e.getMessage());
+
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(GeneralSecurityException.class)
   public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
+    System.out.println("[/api/containers] GeneralSecurityException: " + e.getMessage());
+
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
 }
