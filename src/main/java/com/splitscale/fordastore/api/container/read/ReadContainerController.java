@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.splitscale.fordastore.api.cors.WithCorsHeader;
 import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.read.ReadContainerEndpoint;
+
+import io.jsonwebtoken.Header;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600, exposedHeaders = "Authorization", allowedHeaders = "Authorization")
@@ -36,7 +40,10 @@ public class ReadContainerController {
 
     ContainerResponse containerResponse = endpoint.readByContainerId(containerId, jwsToken);
 
-    return new ResponseEntity<>(containerResponse, HttpStatus.OK);
+    WithCorsHeader withCorsHeaders = new WithCorsHeader();
+    HttpHeaders headers = withCorsHeaders.getHeaders();
+
+    return new ResponseEntity<>(containerResponse, headers, HttpStatus.OK);
   }
 
   @ResponseBody
@@ -46,7 +53,10 @@ public class ReadContainerController {
 
     List<ContainerResponse> containers = endpoint.readListByUid(uid, jwsToken);
 
-    return new ResponseEntity<List<ContainerResponse>>(containers, HttpStatus.OK);
+    WithCorsHeader withCorsHeaders = new WithCorsHeader();
+    HttpHeaders headers = withCorsHeaders.getHeaders();
+
+    return new ResponseEntity<List<ContainerResponse>>(containers, headers, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

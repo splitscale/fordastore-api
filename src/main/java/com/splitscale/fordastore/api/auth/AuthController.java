@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.splitscale.fordastore.api.cors.WithCorsHeader;
 import com.splitscale.fordastore.core.user.UserRequest;
 import com.splitscale.fordastore.core.user.UserResponse;
 import com.splitscale.shield.endpoints.auth.LoginEndpoint;
@@ -37,7 +38,11 @@ public class AuthController {
       throws IllegalArgumentException, IOException {
 
     registerEndpoint.register(userRequest);
-    return new ResponseEntity<String>(HttpStatus.OK);
+
+    WithCorsHeader withCorsHeaders = new WithCorsHeader();
+    HttpHeaders headers = withCorsHeaders.getHeaders();
+
+    return new ResponseEntity<String>(headers, HttpStatus.OK);
   }
 
   @ResponseBody
@@ -45,7 +50,9 @@ public class AuthController {
   public ResponseEntity<UserResponse> login(@RequestBody UserRequest userRequest)
       throws IllegalArgumentException, IOException {
 
-    HttpHeaders headers = new HttpHeaders();
+    WithCorsHeader withCorsHeaders = new WithCorsHeader();
+    HttpHeaders headers = withCorsHeaders.getHeaders();
+
     LoginResponse loginResponse = loginEndpoint.login(userRequest);
 
     headers.add("Authorization", loginResponse.getJws());

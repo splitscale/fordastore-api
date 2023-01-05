@@ -3,6 +3,7 @@ package com.splitscale.fordastore.api.url.edit;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.splitscale.fordastore.api.cors.WithCorsHeader;
 import com.splitscale.fordastore.core.url.Url;
 import com.splitscale.fordastore.core.url.UrlResponse;
 import com.splitscale.shield.endpoints.url.edit.EditUrlEndpoint;
@@ -38,7 +40,10 @@ public class EditUrlController {
 
     UrlResponse urlResponse = new UrlResponse(url.getUrlID(), url.getInnerUrl());
 
-    return new ResponseEntity<UrlResponse>(urlResponse, HttpStatus.OK);
+    WithCorsHeader withCorsHeaders = new WithCorsHeader();
+    HttpHeaders headers = withCorsHeaders.getHeaders();
+
+    return new ResponseEntity<UrlResponse>(urlResponse, headers, HttpStatus.OK);
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
