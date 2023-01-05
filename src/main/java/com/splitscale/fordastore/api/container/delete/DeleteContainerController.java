@@ -29,7 +29,7 @@ public class DeleteContainerController {
 
   @ResponseBody
   @DeleteMapping
-  public ResponseEntity<String> createContainer(@RequestParam Long containerId,
+  public ResponseEntity<String> createContainer(@RequestParam(value = "cid") Long containerId,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     endpoint.delete(containerId, jwsToken);
