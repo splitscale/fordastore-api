@@ -20,7 +20,7 @@ import com.splitscale.shield.endpoints.auth.RegisterEndpoint;
 import com.splitscale.shield.response.LoginResponse;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(value = "*")
 @RequestMapping("/api/auth")
 public class AuthController {
   private RegisterEndpoint registerEndpoint;
