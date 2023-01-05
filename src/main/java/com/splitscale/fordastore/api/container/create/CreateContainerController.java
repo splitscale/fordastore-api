@@ -20,7 +20,6 @@ import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
 
 @RestController
 @RequestMapping("/api/containers")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class CreateContainerController {
   CreateContainerEndpoint endpoint;
 
@@ -30,7 +29,7 @@ public class CreateContainerController {
 
   @ResponseBody
   @PostMapping
-  @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = "Authorization")
+  @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowedHeaders = "Authorization")
   public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
