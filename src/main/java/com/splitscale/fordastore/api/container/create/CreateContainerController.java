@@ -3,7 +3,6 @@ package com.splitscale.fordastore.api.container.create;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.Container;
 import com.splitscale.fordastore.core.container.ContainerRequest;
+import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/containers")
 public class CreateContainerController {
   CreateContainerEndpoint endpoint;
@@ -30,16 +30,12 @@ public class CreateContainerController {
 
   @ResponseBody
   @PostMapping
-  @CrossOrigin
-  public ResponseEntity<Container> createContainer(@RequestBody ContainerRequest containerRequest,
+  public ResponseEntity<ContainerResponse> createContainer(@RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-    System.out.println("uid: " + containerRequest.getUid());
-    System.out.println("authorization: " + jwsToken);
+    ContainerResponse container = endpoint.create(containerRequest, jwsToken);
 
-    Container container = endpoint.create(containerRequest, jwsToken);
-
-    return new ResponseEntity<Container>(container, HttpStatus.OK);
+    return new ResponseEntity<ContainerResponse>(container, HttpStatus.OK);
   }
 
   @ExceptionHandler(IOException.class)
