@@ -20,6 +20,7 @@ import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
 
 @RestController
 @RequestMapping("/api/containers")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CreateContainerController {
   CreateContainerEndpoint endpoint;
 
