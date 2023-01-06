@@ -20,7 +20,7 @@ import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.read.ReadContainerEndpoint;
 
 @RestController
-@CrossOrigin(allowedHeaders = "authorization")
+@CrossOrigin
 @RequestMapping("/api/containers")
 public class ReadContainerController {
   ReadContainerEndpoint endpoint;

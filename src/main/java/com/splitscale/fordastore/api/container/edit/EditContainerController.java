@@ -20,7 +20,7 @@ import com.splitscale.fordastore.core.container.ContainerRequest;
 import com.splitscale.shield.endpoints.container.edit.EditContainerEndpoint;
 
 @RestController
-@CrossOrigin(allowedHeaders = "authorization")
+@CrossOrigin
 @RequestMapping("/container")
 public class EditContainerController {
   EditContainerEndpoint endpoint;
