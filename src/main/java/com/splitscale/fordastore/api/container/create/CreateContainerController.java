@@ -38,6 +38,11 @@ public class CreateContainerController {
     return new ResponseEntity<ContainerResponse>(container, HttpStatus.OK);
   }
 
+  @ExceptionHandler(GeneralSecurityException.class)
+  public ResponseEntity<String> handleGeneralServerError(GeneralSecurityException e) {
+    return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
   @ExceptionHandler(IOException.class)
   public ResponseEntity<String> handleInternalServerError(IOException e) {
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
