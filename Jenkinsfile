@@ -1,5 +1,5 @@
 def runServer() {
-  sh 'docker run --name fordastore-api --network fordastore -p 28762:8081 -d splitscale/fordastore-api:latest'
+  sh 'docker run --name fordastore-api --network fordastore --network-alias api -p 28762:8081 -d splitscale/fordastore-api:latest'
 }
 
 pipeline {
