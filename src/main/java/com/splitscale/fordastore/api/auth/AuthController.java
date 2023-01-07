@@ -23,6 +23,7 @@ import com.splitscale.shield.response.LoginResponse;
 @CrossOrigin
 @RequestMapping("/api/auth")
 public class AuthController {
+
   private RegisterEndpoint registerEndpoint;
   private LoginEndpoint loginEndpoint;
 
@@ -48,8 +49,10 @@ public class AuthController {
       throws IllegalArgumentException, IOException {
 
     HttpHeaders headers = new HttpHeaders();
+    System.out.println(headers.toString());
 
     LoginResponse loginResponse = loginEndpoint.login(userRequest);
+    System.out.println(loginResponse.toString());
 
     headers.add("Authorization", loginResponse.getJws());
 
@@ -58,11 +61,13 @@ public class AuthController {
 
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+    System.out.println(e.getMessage());
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(IOException.class)
   public ResponseEntity<String> handleInternalServerError(IOException e) {
+    System.out.println(e.getMessage());
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
