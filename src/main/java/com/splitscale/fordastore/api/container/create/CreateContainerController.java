@@ -22,7 +22,7 @@ import com.splitscale.shield.endpoints.container.create.CreateContainerEndpoint;
 @CrossOrigin
 @RequestMapping("/api/containers")
 public class CreateContainerController {
-  CreateContainerEndpoint endpoint;
+  private CreateContainerEndpoint endpoint;
 
   public CreateContainerController(CreateContainerEndpoint endpoint) {
     this.endpoint = endpoint;
@@ -33,18 +33,24 @@ public class CreateContainerController {
   public ResponseEntity<ContainerResponse> createContainer(@RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
+    System.out.println("[containerRequest]: " + containerRequest.getName());
     ContainerResponse container = endpoint.create(containerRequest, jwsToken);
+
+    System.out.println("[ContainerResponse]: " + container.getContainerID());
+    System.out.println("[ContainerResponse]: " + container.getName());
 
     return new ResponseEntity<ContainerResponse>(container, HttpStatus.OK);
   }
 
   @ExceptionHandler(IOException.class)
   public ResponseEntity<String> handleInternalServerError(IOException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    System.out.println(e.getMessage());
+    return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(GeneralSecurityException.class)
   public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
+    System.out.println(e.getMessage());
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
 }
