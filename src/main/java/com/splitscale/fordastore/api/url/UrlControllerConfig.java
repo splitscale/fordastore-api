@@ -7,9 +7,11 @@ import com.splitscale.ditabys.repositories.URLRepositoryInteractor;
 import com.splitscale.fordastore.core.url.create.CreateUrlInteractor;
 import com.splitscale.fordastore.core.url.delete.DeleteUrlInteractor;
 import com.splitscale.fordastore.core.url.edit.EditUrlInteractor;
+import com.splitscale.fordastore.core.url.read.ReadUrlInteractor;
 import com.splitscale.shield.endpoints.url.create.CreateUrlEndpoint;
 import com.splitscale.shield.endpoints.url.delete.DeleteUrlEndpoint;
 import com.splitscale.shield.endpoints.url.edit.EditUrlEndpoint;
+import com.splitscale.shield.endpoints.url.read.ReadUrlEndpoint;
 
 @Configuration
 public class UrlControllerConfig {
@@ -49,5 +51,15 @@ public class UrlControllerConfig {
   @Bean
   public EditUrlEndpoint getEditUrlEndpoint(EditUrlInteractor urlInteractor) {
     return new EditUrlEndpoint(urlInteractor);
+  }
+
+  @Bean
+  public ReadUrlInteractor getReadUrlInteractor(URLRepositoryInteractor urlRepositoryInteractor) {
+    return new ReadUrlInteractor(urlRepositoryInteractor);
+  }
+
+  @Bean
+  public ReadUrlEndpoint readUrlEndpoint(ReadUrlInteractor readUrlInteractor) {
+    return new ReadUrlEndpoint(readUrlInteractor);
   }
 }

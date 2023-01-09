@@ -1,6 +1,7 @@
 package com.splitscale.fordastore.api.config;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,6 +25,7 @@ public class CorsFilter extends OncePerRequestFilter {
         "Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Authorization");
     response.addHeader("Access-Control-Allow-Credentials", "true");
     response.addIntHeader("Access-Control-Max-Age", 10);
+
     filterChain.doFilter(request, response);
   }
 }

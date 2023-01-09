@@ -20,7 +20,6 @@
   </properties>
 
   <dependencies>
-
     <dependency>
       <groupId>com.splitscale.ditabys</groupId>
       <artifactId>ditabys</artifactId>
@@ -58,6 +57,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+
 
     <dependency>
       <groupId>org.springframework.boot</groupId>

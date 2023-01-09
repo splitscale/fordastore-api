@@ -1,6 +1,7 @@
 package com.splitscale.fordastore.api.auth;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -49,10 +50,7 @@ public class AuthController {
       throws IllegalArgumentException, IOException {
 
     HttpHeaders headers = new HttpHeaders();
-    System.out.println(headers.toString());
-
     LoginResponse loginResponse = loginEndpoint.login(userRequest);
-    System.out.println(loginResponse.toString());
 
     headers.add("Authorization", loginResponse.getJws());
 
