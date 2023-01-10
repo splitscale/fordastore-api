@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.splitscale.fordastore.core.container.Container;
 import com.splitscale.fordastore.core.container.ContainerRequest;
-import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.edit.EditContainerEndpoint;
 
 @RestController
@@ -35,9 +32,10 @@ public class EditContainerController {
   @PutMapping
   public ResponseEntity<String> editContainer(@RequestParam(value = "cid") Long containerId,
       @RequestBody ContainerRequest containerRequest,
-      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
     endpoint.edit(containerRequest, containerId, jwsToken);
+    System.out.println("[containerRequest]: " + containerRequest.getName() + ", " + containerRequest.getUid());
 
     return new ResponseEntity<>(HttpStatus.OK);
   }
