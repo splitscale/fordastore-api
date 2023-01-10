@@ -21,7 +21,7 @@ import com.splitscale.shield.endpoints.container.edit.EditContainerEndpoint;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/container")
+@RequestMapping("/api/containers")
 public class EditContainerController {
   EditContainerEndpoint endpoint;
 

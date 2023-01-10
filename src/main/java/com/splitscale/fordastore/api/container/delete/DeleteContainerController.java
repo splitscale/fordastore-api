@@ -18,7 +18,7 @@ import com.splitscale.shield.endpoints.container.delete.DeleteContainerEndpoint;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/container")
+@RequestMapping("/api/containers")
 public class DeleteContainerController {
   DeleteContainerEndpoint endpoint;
 
