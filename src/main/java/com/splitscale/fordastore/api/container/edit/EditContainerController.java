@@ -44,11 +44,13 @@ public class EditContainerController {
 
   @ExceptionHandler(IOException.class)
   public ResponseEntity<String> handleInternalServerError(IOException e) {
+    System.out.println("[IOException]: " + e.getMessage());
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(GeneralSecurityException.class)
   public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
+    System.out.println("[GeneralSecurityException]: " + e.getMessage());
     return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
 }
