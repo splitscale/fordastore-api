@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.splitscale.fordastore.core.container.Container;
 import com.splitscale.fordastore.core.container.ContainerRequest;
+import com.splitscale.fordastore.core.container.ContainerResponse;
 import com.splitscale.shield.endpoints.container.edit.EditContainerEndpoint;
 
 @RestController
@@ -32,18 +33,13 @@ public class EditContainerController {
 
   @ResponseBody
   @PutMapping
-  public ResponseEntity<Container> editContainer(@RequestParam(value = "cid") Long containerId,
+  public ResponseEntity<String> editContainer(@RequestParam(value = "cid") Long containerId,
       @RequestBody ContainerRequest containerRequest,
-      @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
+      @RequestHeader(value = "authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
-    Container container = new Container();
-    container.setContainerID(containerId);
-    container.setName(containerRequest.getName());
-    container.setUid(containerRequest.getUid());
+    endpoint.edit(containerRequest, containerId, jwsToken);
 
-    endpoint.edit(container, jwsToken);
-
-    return new ResponseEntity<Container>(container, HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @ExceptionHandler(IOException.class)
