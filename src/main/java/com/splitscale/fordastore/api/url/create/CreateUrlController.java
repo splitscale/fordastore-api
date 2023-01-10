@@ -38,16 +38,16 @@ public class CreateUrlController {
 
     UrlResponse urlResponse = new UrlResponse(url.getUrlID(), urlRequest.getInnerUrl());
 
-    return new ResponseEntity<UrlResponse>(urlResponse, HttpStatus.OK);
+    return new ResponseEntity<>(urlResponse, HttpStatus.OK);
   }
 
   @ExceptionHandler(IOException.class)
   public ResponseEntity<String> handleInternalServerError(IOException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(GeneralSecurityException.class)
   public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
 }
