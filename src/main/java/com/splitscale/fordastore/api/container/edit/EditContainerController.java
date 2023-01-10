@@ -5,6 +5,7 @@ import java.security.GeneralSecurityException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ public class EditContainerController {
 
   @ResponseBody
   @PutMapping("/{containerId}")
-  public ResponseEntity<String> editContainer(@PathVariable Long containerId,
+  public ResponseEntity<String> editContainer(@PathVariable(value = "containerId") Long containerId,
       @RequestBody ContainerRequest containerRequest,
       @RequestHeader(value = "Authorization") String jwsToken) throws IOException, GeneralSecurityException {
 
@@ -42,14 +43,14 @@ public class EditContainerController {
   }
 
   @ExceptionHandler(IOException.class)
-  public ResponseEntity<String> handleInternalServerError(IOException e) {
+  public ErrorResponseException handleInternalServerError(IOException e) {
     System.out.println("[IOException]: " + e.getMessage());
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ErrorResponseException(HttpStatus.INTERNAL_SERVER_ERROR, e);
   }
 
   @ExceptionHandler(GeneralSecurityException.class)
-  public ResponseEntity<String> handleGeneralSecurityException(GeneralSecurityException e) {
+  public ErrorResponseException handleGeneralSecurityException(GeneralSecurityException e) {
     System.out.println("[GeneralSecurityException]: " + e.getMessage());
-    return new ResponseEntity<String>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+    return new ErrorResponseException(HttpStatus.UNAUTHORIZED, e);
   }
 }
