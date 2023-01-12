@@ -1,6 +1,3 @@
-def runServer() {
-  sh 'docker run --name fordastore-api --network fordastore --network-alias fordastore-api -p 8081:8081 -d fordastore-api:latest'
-}
 
 pipeline {
     agent any
@@ -73,4 +70,8 @@ pipeline {
           }
         }
     }
+}
+
+def runServer() {
+  sh 'docker run --name fordastore-api --network fordastore --network-alias fordastore-api -p 8081:8081 -d fordastore-api:latest'
 }
