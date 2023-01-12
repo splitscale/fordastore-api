@@ -40,7 +40,7 @@ pipeline {
 
         stage('build docker image') {
       steps {
-        sh 'docker build -t fordastore-api:latest .'
+        sh 'docker build -t kasutu/fordastore-api:latest .'
       }
         }
 
@@ -73,5 +73,5 @@ pipeline {
 }
 
 def runServer() {
-  sh 'docker run --name fordastore-api --network fordastore --network-alias fordastore-api -p 8081:8081 -d fordastore-api:latest'
+  sh 'docker run --name fordastore-api --network fordastore --network-alias fordastore-api -p 8081:8081 -d kasutu/fordastore-api:latest'
 }
